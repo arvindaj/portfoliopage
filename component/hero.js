@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import Tradingpic from '../assets/tradingpic.png'
 import Image from 'next/image';
 import profilepic from '../assets/Media.jpg'
+import CustomSplashCursor from '../components/CustomSplashCursor';
 
 export default function Hero() {
   const [darkMode, setDarkMode] = useState(false);
@@ -30,7 +31,7 @@ export default function Hero() {
       title: "Full-Stack Trading Platform",
       description: "Developed a full-stack Trading API integrating live data solutions, built with JavaScript, React, Node.js, and MongoDB for real-time performance.",
       tech: ["React", "Node.js", "MongoDB", "vite", "Bootstrap"],
-      image: {Tradingpic}
+      image: { Tradingpic }
     },
     {
       id: 2,
@@ -84,7 +85,6 @@ export default function Hero() {
           <meta name="description" content="Personal portfolio showcasing my work and skills as a frontend developer" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-
         {/* Navbar */}
         <nav className="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-gray-900/80 shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -207,13 +207,13 @@ export default function Hero() {
                     </div>
                   )}
 
-                <Image
-                src={profilepic}
-                alt="Profile"
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-                onLoad={() => setImageLoaded(true)}
-                onError={() => console.error('Failed to load image')}
-              />
+                  <Image
+                    src={profilepic}
+                    alt="Profile"
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                    onLoad={() => setImageLoaded(true)}
+                    onError={() => console.error('Failed to load image')}
+                  />
                 </div>
               </motion.div>
             </div>
