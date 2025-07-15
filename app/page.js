@@ -1,4 +1,4 @@
-import SplashCursor from "../components/Splashcursor";
+import SplashCursor from "../components/splashcursor";
 import Hero from "../component/hero";
 
 
