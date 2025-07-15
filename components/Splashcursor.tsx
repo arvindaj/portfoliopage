@@ -196,41 +196,43 @@ function getWebGLContext(canvas: HTMLCanvasElement) {
       return status === gl.FRAMEBUFFER_COMPLETE;
     }
 
-    class Material {
-      vertexShader: WebGLShader;
-      fragmentShaderSource: string;
-      programs: { [key: number]: WebGLProgram };
-      activeProgram: WebGLProgram | null;
-      uniforms: { [key: string]: WebGLUniformLocation };
+  class Material {
+  vertexShader: WebGLShader;
+  fragmentShaderSource: string;
+  programs: { [key: number]: WebGLProgram };
+  activeProgram: WebGLProgram | null;
+  uniforms: { [key: string]: WebGLUniformLocation };
 
-      constructor(vertexShader: WebGLShader, fragmentShaderSource: string) {
-        this.vertexShader = vertexShader;
-        this.fragmentShaderSource = fragmentShaderSource;
-        this.programs = [];
-        this.activeProgram = null;
-        this.uniforms = [];
-      }
-      setKeywords(keywords: string[]) {
-        let hash = 0;
-        for (let i = 0; i < keywords.length; i++) hash += hashCode(keywords[i]);
-        let program = this.programs[hash];
-        if (program == null) {
-          let fragmentShader = compileShader(
-            gl.FRAGMENT_SHADER,
-            this.fragmentShaderSource,
-            keywords
-          );
-          program = createProgram(this.vertexShader, fragmentShader);
-          this.programs[hash] = program;
-        }
-        if (program === this.activeProgram) return;
-        this.uniforms = getUniforms(program);
-        this.activeProgram = program;
-      }
-      bind() {
-        gl.useProgram(this.activeProgram);
-      }
+  constructor(vertexShader: WebGLShader, fragmentShaderSource: string) {
+    this.vertexShader = vertexShader;
+    this.fragmentShaderSource = fragmentShaderSource;
+    this.programs = {}; // Changed from [] to {}
+    this.activeProgram = null;
+    this.uniforms = {}; // Changed from [] to {}
+  }
+  
+  setKeywords(keywords: string[]) {
+    let hash = 0;
+    for (let i = 0; i < keywords.length; i++) hash += hashCode(keywords[i]);
+    let program = this.programs[hash];
+    if (program == null) {
+      let fragmentShader = compileShader(
+        gl.FRAGMENT_SHADER,
+        this.fragmentShaderSource,
+        keywords
+      );
+      program = createProgram(this.vertexShader, fragmentShader);
+      this.programs[hash] = program;
     }
+    if (program === this.activeProgram) return;
+    this.uniforms = getUniforms(program);
+    this.activeProgram = program;
+  }
+  
+  bind() {
+    gl.useProgram(this.activeProgram);
+  }
+}
 
     class Program {
       uniforms: { [key: string]: WebGLUniformLocation };
@@ -256,15 +258,15 @@ function getWebGLContext(canvas: HTMLCanvasElement) {
       return program;
     }
 
-    function getUniforms(program: WebGLProgram) {
-      let uniforms: { [key: string]: WebGLUniformLocation } = [];
-      let uniformCount = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
-      for (let i = 0; i < uniformCount; i++) {
-        let uniformName = gl.getActiveUniform(program, i)!.name;
-        uniforms[uniformName] = gl.getUniformLocation(program, uniformName)!;
-      }
-      return uniforms;
-    }
+   function getUniforms(program: WebGLProgram) {
+  let uniforms: { [key: string]: WebGLUniformLocation } = {}; // Changed from [] to {}
+  let uniformCount = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
+  for (let i = 0; i < uniformCount; i++) {
+    let uniformName = gl.getActiveUniform(program, i)!.name;
+    uniforms[uniformName] = gl.getUniformLocation(program, uniformName)!;
+  }
+  return uniforms;
+}
 
     function compileShader(type: number, source: string, keywords?: string[]) {
       source = addKeywords(source, keywords);
