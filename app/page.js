@@ -1,4 +1,4 @@
-import SplashCursor from "../components/splashcursor.tsx";
+import SplashCursor from "../components/splashcursor";
 import Hero from "../component/hero";
 
 
