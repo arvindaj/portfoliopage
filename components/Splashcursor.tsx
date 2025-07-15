@@ -19,7 +19,7 @@ interface SplashCursorProps {
   TRANSPARENT?: boolean;
 }
 
-function SplashCursor({
+function Splashcursor({
   SIM_RESOLUTION = 128,
   DYE_RESOLUTION = 1440,
   CAPTURE_RESOLUTION = 512,
@@ -1261,4 +1261,4 @@ function getWebGLContext(canvas: HTMLCanvasElement) {
   );
 }
 
-export default SplashCursor;
+export default Splashcursor;
